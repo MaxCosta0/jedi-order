@@ -32,6 +32,25 @@ public class SaberService {
 	public List<Saber> findAllSaberFromJedi(String name){
 		Optional<Jedi> jedi = jediService.findJedi(name);
 		
+		if(jedi.isEmpty()) {
+			return null;
+		}
+		
 		return saberRepository.findByJedi(jedi.get());
+	}
+	
+	public Optional<Saber> findOneSaber(Long id){
+		return saberRepository.findById(id);
+	}
+	
+	public Boolean removeSaber(Long id) {
+		Optional<Saber> saberToRemove = saberRepository.findById(id);
+		
+		if(saberToRemove.isEmpty()) {
+			return false;
+		}
+		
+		saberRepository.delete(saberToRemove.get());
+		return true;
 	}
 }

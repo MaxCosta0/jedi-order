@@ -33,12 +33,11 @@ public class Jedi implements Serializable{
 	
 	public Jedi() { }
 
-	public Jedi(Long id, String name, Double midiClorian, List<Saber> saber) {
+	public Jedi(Long id, String name, Double midiClorian) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.midiClorian = midiClorian;
-		//this.saber = saber;
 	}
 
 	public Long getId() {

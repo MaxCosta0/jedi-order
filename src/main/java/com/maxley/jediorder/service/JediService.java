@@ -34,6 +34,13 @@ public class JediService {
 	}
 	
 	public Boolean removeJedi(String name) {
-		return jediRepository.deleteByName(name);
+		Optional<Jedi> jediToRemove = jediRepository.findByName(name);
+		
+		if(jediToRemove.isEmpty()) {
+			return false;
+		}
+		
+		jediRepository.delete(jediToRemove.get());
+		return true;
 	}
 }

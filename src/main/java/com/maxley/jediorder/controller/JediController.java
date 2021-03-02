@@ -61,25 +61,25 @@ public class JediController {
 	}
 	
 	@PutMapping("/{jediName}")
-	public ResponseEntity<Jedi> putJedi(@Valid @RequestBody Jedi jedi, @PathVariable String jediName) {
+	public ResponseEntity<Jedi> putJedi(@Valid @RequestBody Jedi newJedi, @PathVariable String jediName) {
 		Optional<Jedi> foundJedi = jediService.findJedi(jediName);
 		
 		if(foundJedi.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		jedi.setId(foundJedi.get().getId());
-		jedi = jediService.saveJedi(jedi);
+		newJedi.setId(foundJedi.get().getId());
+		newJedi = jediService.saveJedi(newJedi);
 		
-		return ResponseEntity.ok(jedi);
+		return ResponseEntity.ok(newJedi);
 	}
 	
 	@DeleteMapping("/{jediName}")
 	public ResponseEntity<Void> deleteJedi(@PathVariable String jediName){
-		Boolean ok = jediService.removeJedi(jediName);
-		if(ok) {
-			return ResponseEntity.noContent().build();
+		Boolean success = jediService.removeJedi(jediName);
+		if(!success) {
+			throw new DomainException("there's no Jedi with this name");
 		}
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.noContent().build();
 	}
 }
